@@ -1,0 +1,37 @@
+# --- Local AI assistant instructions (kept private) ---
+CLAUDE.md
+
+# --- Secrets / environment ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# --- Vector database (rebuilt from knowledge/ on startup) ---
+backend/data/chroma/
+# NOTE: backend/data/chinook.sqlite is intentionally NOT ignored (small, needed to reproduce)
+
+# --- Evals: keep saved results, but ignore scratch files ---
+backend/evals/results/*.tmp
+
+# --- Node / frontend ---
+node_modules/
+frontend/dist/
+*.log
+npm-debug.log*
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
