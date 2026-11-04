@@ -26,3 +26,17 @@ def test_cors_allows_frontend_origin() -> None:
 def test_cors_blocks_other_origins() -> None:
     response = client.get("/health", headers={"Origin": "http://evil.example"})
     assert "access-control-allow-origin" not in response.headers
+
+
+def test_schema_lists_tables_with_columns_and_foreign_keys() -> None:
+    response = client.get("/schema")
+    assert response.status_code == 200
+    tables = {table["name"]: table for table in response.json()}
+    assert len(tables) == 11
+
+    invoice = tables["Invoice"]
+    column_names = [column["name"] for column in invoice["columns"]]
+    assert "InvoiceId" in column_names and "Total" in column_names
+    assert {"column": "CustomerId", "ref_table": "Customer", "ref_column": "CustomerId"} in invoice[
+        "foreign_keys"
+    ]
